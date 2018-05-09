@@ -1,0 +1,15 @@
+-cp src
+-lib om.core
+-dce full
+-debug
+--each
+
+--next
+-js bin/service.js
+-main archillect.web.Service
+-lib hxargs
+-lib hxnodejs
+
+--next
+-js web/app.js
+-main archillect.web.App
