@@ -76,9 +76,12 @@ class App {
 									a.target = '_blank';
 									a.href = 'http://archillect.com/'+meta.index;
 									var img = document.createImageElement();
-                                    //img.onload = function(){ //TODO check if all images are loaded }
 									img.src = meta.url;
-									img.title = meta.index+'';
+                                    img.title = 'Index: '+meta.index+'\n';
+                                    for( c in meta.classification ) {
+                                        img.title += '\t'+c.name+': '+c.precision+'\n';
+                                    }
+                                    //img.onload = function(){ //TODO check if all images are loaded }
 									a.appendChild( img );
 									li.appendChild( a );
 									images.appendChild( li );

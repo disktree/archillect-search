@@ -4,6 +4,7 @@ class Service {
 
     static var data : Array<ImageMetaData>;
 
+    //TODO sort by precision
     static function search( term : String, ?precision : Float, ?limit : Int ) {
         term = term.toLowerCase();
         println( 'Searching: $term (precision:$precision,limit:$limit)' );
@@ -62,11 +63,10 @@ class Service {
                     res.writeHead( 404, { "Content-Type": "text/plain" } );
                     res.end();
                 } else {
-                    var precision = (query.precision != null) ? Std.parseInt( query.precision ) : 0;
+                    var precision = (query.precision != null) ? Std.parseFloat( query.precision ) : 0;
                     var limit = (query.limit != null) ? Std.parseInt( query.limit ) : 0;
                     var found = search( query.term, precision, limit );
-                    //TODO sort by precision
-                    trace( 'Found: '+found.length );
+                    println( 'Found: '+found.length );
                     res.writeHead( 200, {
                         'Access-Control-Allow-Origin': '*',
                         'Content-Type': 'application/json'
