@@ -9,6 +9,8 @@ import js.Promise;
 #if nodejs
 import js.Node.console;
 import js.node.Fs;
+import js.node.Http;
+import js.node.Url;
 #else
 import js.Browser.console;
 import js.Browser.document;

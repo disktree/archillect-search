@@ -14,6 +14,18 @@ class App {
     static var data : Array<ImageMetaData>;
 
     static function search( term : String, ?precision : Float, ?limit : Int ) : Promise<Array<ImageMetaData>> {
+
+        var url = 'http://$HOST:$PORT/?term=$term';
+        if( precision != null ) url += '&precision=$precision';
+        if( limit != null ) url += '&limit=$limit';
+
+        return FetchTools.fetchJson( url, {
+            //
+        }).then( function(found:Array<ImageMetaData>){
+            return found;
+        });
+
+        /*
         return FetchTools.fetchJson( 'http://$HOST:$PORT', {
             method: "POST",
             body: Json.stringify( {
@@ -24,6 +36,7 @@ class App {
         } ).then( function(found:Array<ImageMetaData>){
             return found;
         });
+        */
     }
 
     static function main() {
@@ -44,6 +57,7 @@ class App {
 				case 13:
 					var str = term.value.trim();
 					if( str.length >= 2 ) {
+                        str = str.toLowerCase();
 						images.innerHTML = '';
 						info.textContent = 'searching [$str]';
 						var precisionValue = Std.parseFloat( precision.value );
@@ -51,26 +65,25 @@ class App {
 						search( str, precisionValue, limitValue ).then( function(found:Array<ImageMetaData>){
 							data = found;
 							if( data.length == 0 ) {
-								window.alert( 'Nothing found' );
+								window.alert( '0 items found' );
 							} else {
 								info.textContent = data.length+' items found';
 								trace( data.length+' items found' );
 								for( i in 0...data.length ) {
-
 									var meta = found[i];
 									var li = document.createLIElement();
 									var a = document.createAnchorElement();
 									a.target = '_blank';
 									a.href = 'http://archillect.com/'+meta.index;
 									var img = document.createImageElement();
+                                    //img.onload = function(){ //TODO check if all images are loaded }
 									img.src = meta.url;
 									img.title = meta.index+'';
 									a.appendChild( img );
 									li.appendChild( a );
 									images.appendChild( li );
-
-									if( i > limitValue )
-										break;
+								//	if( i > limitValue )
+								//		break;
 								}
 							}
 						});
@@ -86,7 +99,6 @@ class App {
 				form.style.opacity = '1';
 			}
 			*/
-
 
 			/*
 				var words = document.querySelector( '.words' );

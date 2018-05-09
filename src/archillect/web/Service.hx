@@ -1,28 +1,28 @@
 package archillect.web;
 
-import js.node.Http;
-
 class Service {
 
     static var data : Array<ImageMetaData>;
 
     static function search( term : String, ?precision : Float, ?limit : Int ) {
-        println( 'Searching: [$term, $precision, $limit]' );
-        var found = new Array<ImageMetaData>();
+        term = term.toLowerCase();
+        println( 'Searching: $term (precision:$precision,limit:$limit)' );
+        var result = new Array<ImageMetaData>();
         for( i in 0...data.length ) {
             var meta = data[i];
             if( meta.classification == null )
                 continue;
             for( cl in meta.classification ) {
-                if( cl.name == term ) {
-                    if( precision != null && cl.precision >= precision )
-                        found.push( meta );
+                if( cl.name.toLowerCase() == term ) {
+                    if( precision != null && precision > 0 && cl.precision < precision )
+                        continue;
+                    result.push( meta );
                 }
-                if( limit != null && i >= limit )
-                    break;
             }
+            if( limit != null && limit > 0 && result.length >= limit )
+                break;
         }
-        return found;
+        return result;
     }
 
     static function main() {
@@ -55,6 +55,26 @@ class Service {
             println( data.length + ' items loaded into memory' );
 
             Http.createServer( (req,res) -> {
+                var url = Url.parse( req.url, true );
+                var query : Dynamic = url.query;
+                var term = query.term;
+                if( term == null ) {
+                    res.writeHead( 404, { "Content-Type": "text/plain" } );
+                    res.end();
+                } else {
+                    var precision = (query.precision != null) ? Std.parseInt( query.precision ) : 0;
+                    var limit = (query.limit != null) ? Std.parseInt( query.limit ) : 0;
+                    var found = search( query.term, precision, limit );
+                    //TODO sort by precision
+                    trace( 'Found: '+found.length );
+                    res.writeHead( 200, {
+                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type': 'application/json'
+                    } );
+                    res.end( Json.stringify( found ) );
+                }
+
+                /*
                 if( req.method == 'POST' ) {
                     var str = '';
                     req.on( 'data', chunk -> str += chunk );
@@ -72,6 +92,8 @@ class Service {
                         res.end( Json.stringify( found ) );
                     });
                 }
+                */
+
             }).listen( port, host );
         });
     }
