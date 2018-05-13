@@ -1,0 +1,98 @@
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: #050505;
+	color: #f0f0f0;
+	font-family: monospace;
+	font-size: 14px;
+	overflow-y: scroll;
+}
+
+form {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	/*
+	position: relative;
+	z-index: 2;
+	opacity: 0.8;
+	*/
+	background: #000;
+	display: inline-block;
+	padding: 5px;
+	transition: opacity 0.2s;
+}
+
+/*
+form * {
+	box-shadow: 6px 6px 16px rgba(0,0,0,0.6);
+}
+*/
+
+
+button, input, select, option {
+	-webkit-appearance: none;
+	position: relative;
+	font-family: monospace;
+	font-size: 14px;
+	/*
+	min-width: 10px;
+	height: 36px;
+	*/
+	padding: 4px 10px;
+	line-height: 20px;
+
+	text-decoration: none;
+	text-transform: uppercase;
+	vertical-align: middle;
+	box-sizing: border-box;
+	background: #000;
+	color: #fff;
+	border: 1px solid #fff;
+}
+
+option {
+	background: #000;
+	color: #fff;
+}
+
+.info {
+	display: inline-block;
+	/*
+	position: relative;
+	background: #ff00ff;
+	*/
+	line-height: 0px;
+	padding: 5px;
+	user-select: none;
+}
+
+ol, li {
+	margin: 0;
+	padding: 0;
+}
+
+ol.images  {
+	/*
+	position: absolute;
+	top: 0; right: 0; bottom; left: 0;
+	z-index: 1;
+	*/
+	user-select: none;
+}
+ol.images li {
+	display: inline-block;
+	/*
+	*/
+}
+ol.images li img {
+	display: inline-block;
+	height: 200px;
+	max-width: 200px;
+	max-height: 200px;
+	background: #000;
+}

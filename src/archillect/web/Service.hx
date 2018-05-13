@@ -55,6 +55,16 @@ class Service {
             data = Json.parse( r.toString() );
             println( data.length + ' items loaded into memory' );
 
+            var n720 = 0;
+            for( meta in data ) {
+                if( meta.width >= 1280 && meta.height >= 720 ) {
+                    n720++;
+                }
+            }
+            trace(n720);
+
+            return;
+
             Http.createServer( (req,res) -> {
                 var url = Url.parse( req.url, true );
                 var query : Dynamic = url.query;

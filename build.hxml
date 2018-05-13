@@ -13,3 +13,4 @@
 --next
 -js web/app.js
 -main archillect.web.App
+-cmd lessc res/style/app.less web/app.css

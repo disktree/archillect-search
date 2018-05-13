@@ -3,6 +3,8 @@ package archillect.web;
 import js.html.DivElement;
 import js.html.FormElement;
 import js.html.InputElement;
+import js.html.OListElement;
+import js.html.SelectElement;
 import om.FetchTools;
 
 class App {
@@ -12,6 +14,14 @@ class App {
     static inline var PORT = 7777;
 
     static var data : Array<ImageMetaData>;
+
+    static var images : OListElement;
+    static var form : FormElement;
+    static var term : InputElement;
+    static var precision : InputElement;
+    static var limit : InputElement;
+    //static var sort : SelectElement;
+    static var info : DivElement;
 
     static function search( term : String, ?precision : Float, ?limit : Int ) : Promise<Array<ImageMetaData>> {
 
@@ -39,58 +49,77 @@ class App {
         */
     }
 
+    static function submit() {
+
+        var str = term.value.trim();
+        if( str.length >= 2 ) {
+
+            str = str.toLowerCase();
+            images.innerHTML = '';
+            info.textContent = 'searching [$str]';
+
+            var precisionValue = Std.parseFloat( precision.value );
+            var limitValue = Std.parseInt( limit.value );
+
+            search( str, precisionValue, limitValue ).then( function(found:Array<ImageMetaData>){
+
+                data = found;
+
+                if( data.length == 0 ) {
+                    window.alert( '0 items found' );
+                } else {
+
+                    info.textContent = data.length+' items found';
+                    
+                    trace( data.length+' items found' );
+
+                    //TODO sort
+                    //var sort = cast document.querySelector( 'form select[name=sort]' );
+
+                    for( i in 0...data.length ) {
+                        var meta = found[i];
+                        var li = document.createLIElement();
+                        var a = document.createAnchorElement();
+                        a.target = '_blank';
+                        a.href = 'http://archillect.com/'+meta.index;
+                        var img = document.createImageElement();
+                        img.src = meta.url;
+                        img.title = 'Index: '+meta.index+'\n';
+                        for( c in meta.classification ) {
+                            img.title += '\t'+c.name+': '+c.precision+'\n';
+                        }
+                        //img.onload = function(){ //TODO check if all images are loaded }
+                        a.appendChild( img );
+                        li.appendChild( a );
+                        images.appendChild( li );
+                    //	if( i > limitValue )
+                    //		break;
+                    }
+
+                }
+            });
+        }
+    }
+
     static function main() {
 
 		window.onload = function(){
 
-			var images = document.querySelector( 'ol.images' );
-			var form : FormElement = cast document.querySelector( 'form' );
-			var term : InputElement = cast document.querySelector( 'form input[name=search]' );
-			var precision : InputElement = cast document.querySelector( 'form input[name=precision]' );
-			var limit : InputElement = cast document.querySelector( 'form input[name=limit]' );
-			var info : DivElement = cast document.querySelector( '.info' );
-
 			//trace(window.location.search);
+
+            images = cast document.querySelector( 'ol.images' );
+            form = cast document.querySelector( 'form' );
+            term = cast document.querySelector( 'form input[name=search]' );
+            precision = cast document.querySelector( 'form input[name=precision]' );
+            limit = cast document.querySelector( 'form input[name=limit]' );
+            info = cast document.querySelector( '.info' );
+
+            term.focus();
 
 			window.onkeydown = function(e) {
 				switch e.keyCode {
-				case 13:
-					var str = term.value.trim();
-					if( str.length >= 2 ) {
-                        str = str.toLowerCase();
-						images.innerHTML = '';
-						info.textContent = 'searching [$str]';
-						var precisionValue = Std.parseFloat( precision.value );
-						var limitValue = Std.parseInt( limit.value );
-						search( str, precisionValue, limitValue ).then( function(found:Array<ImageMetaData>){
-							data = found;
-							if( data.length == 0 ) {
-								window.alert( '0 items found' );
-							} else {
-								info.textContent = data.length+' items found';
-								trace( data.length+' items found' );
-								for( i in 0...data.length ) {
-									var meta = found[i];
-									var li = document.createLIElement();
-									var a = document.createAnchorElement();
-									a.target = '_blank';
-									a.href = 'http://archillect.com/'+meta.index;
-									var img = document.createImageElement();
-									img.src = meta.url;
-                                    img.title = 'Index: '+meta.index+'\n';
-                                    for( c in meta.classification ) {
-                                        img.title += '\t'+c.name+': '+c.precision+'\n';
-                                    }
-                                    //img.onload = function(){ //TODO check if all images are loaded }
-									a.appendChild( img );
-									li.appendChild( a );
-									images.appendChild( li );
-								//	if( i > limitValue )
-								//		break;
-								}
-							}
-						});
-					}
+				case 13: // Enter
+                    submit();
 				}
 			}
 
