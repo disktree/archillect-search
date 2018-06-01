@@ -13,4 +13,5 @@
 --next
 -js web/app.js
 -main archillect.web.App
--cmd lessc res/style/app.less web/app.css
+-cmd cp -ru res/html/app.html web/index.html
+-cmd lessc res/style/app.less web/app.css --no-color
