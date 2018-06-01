@@ -30,18 +30,15 @@ class Service {
                     continue;
 
                 var clWords : Array<String> = clName.split( ' ' );
+                var added = false;
                 for( word in clWords ) {
                     if( word == term ) {
                         result.push( meta );
+                        added = true;
                         break;
                     }
                 }
-
-                /*
-                if( clName == term ) {
-                    result.push( meta );
-                }
-                */
+                if( added ) break;
             }
 
             if( limit != null && limit > 0 && result.length >= limit )

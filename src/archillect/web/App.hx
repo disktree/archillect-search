@@ -49,7 +49,7 @@ class App {
         */
     }
 
-    static function submit() {
+    static function submitSearch() {
 
         var str = term.value.trim();
         if( str.length >= 2 ) {
@@ -76,6 +76,7 @@ class App {
             info.textContent = data.length+' items found';
 
             trace( data.length+' items found' );
+            trace( data );
 
             //TODO sort
             //var sort = cast document.querySelector( 'form select[name=sort]' );
@@ -127,8 +128,8 @@ class App {
             images = cast document.querySelector( 'ol.images' );
 
             term.focus();
-            //term.value = 'bikini';
-            //submit();
+            term.value = 'bikini';
+            submitSearch();
 
             /*
             var words : Array<Dynamic> = Json.parse( haxe.Resource.getString( 'words' ) );
@@ -149,7 +150,7 @@ class App {
                     //e.preventDefault();
                     //term.select();
 				case 13: // Enter
-                    submit();
+                    submitSearch();
 				}
 			}
 

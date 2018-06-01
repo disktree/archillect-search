@@ -49,7 +49,7 @@ input:focus {
 }
 
 ::placeholder {
-    color: #fff;
+    color: #ddd;
     opacity: 1; /* Firefox */
 }
 
@@ -94,14 +94,20 @@ form.controls {
 }
 
 ol.images {
+
 	line-height: 0;
 	column-count: 5;
   	column-gap: 0px;
+
 	li {
+
 		padding: 1px 0px 0px 1px;
+
 		img {
 			width: 100% !important;
   			height: auto !important;
+			//user-drag: none;
+			//-webkit-user-drag: none;
 		}
 	}
 }
