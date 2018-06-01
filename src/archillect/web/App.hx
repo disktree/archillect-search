@@ -56,48 +56,59 @@ class App {
 
             str = str.toLowerCase();
             images.innerHTML = '';
-            info.textContent = 'searching [$str]';
+            info.textContent = 'searching ...';
 
             var precisionValue = Std.parseFloat( precision.value );
             var limitValue = Std.parseInt( limit.value );
 
-            search( str, precisionValue, limitValue ).then( function(found:Array<ImageMetaData>){
+            search( str, precisionValue, limitValue ).then( handleSearchResult );
+        }
+    }
 
-                data = found;
+    static function handleSearchResult( found:Array<ImageMetaData> ) {
 
-                if( data.length == 0 ) {
-                    window.alert( '0 items found' );
-                } else {
+        data = found;
 
-                    info.textContent = data.length+' items found';
-                    
-                    trace( data.length+' items found' );
+        if( data.length == 0 ) {
+            window.alert( '0 items found' );
+        } else {
 
-                    //TODO sort
-                    //var sort = cast document.querySelector( 'form select[name=sort]' );
+            info.textContent = data.length+' items found';
 
-                    for( i in 0...data.length ) {
-                        var meta = found[i];
-                        var li = document.createLIElement();
-                        var a = document.createAnchorElement();
-                        a.target = '_blank';
-                        a.href = 'http://archillect.com/'+meta.index;
-                        var img = document.createImageElement();
-                        img.src = meta.url;
-                        img.title = 'Index: '+meta.index+'\n';
-                        for( c in meta.classification ) {
-                            img.title += '\t'+c.name+': '+c.precision+'\n';
-                        }
-                        //img.onload = function(){ //TODO check if all images are loaded }
-                        a.appendChild( img );
-                        li.appendChild( a );
-                        images.appendChild( li );
-                    //	if( i > limitValue )
-                    //		break;
-                    }
+            trace( data.length+' items found' );
 
+            //TODO sort
+            //var sort = cast document.querySelector( 'form select[name=sort]' );
+
+            var ol = document.createElement('ol');
+            ol.classList.add( 'images' );
+            document.body.appendChild( ol );
+
+            for( i in 0...data.length ) {
+
+                var meta = found[i];
+
+                var li = document.createLIElement();
+
+                var a = document.createAnchorElement();
+                a.target = '_blank';
+                a.href = 'http://archillect.com/'+meta.index;
+                li.appendChild( a );
+
+                var img = document.createImageElement();
+                img.src = meta.url;
+                img.title = 'Index: '+meta.index+'\n';
+                for( c in meta.classification ) {
+                    img.title += '\t'+c.name+': '+c.precision+'\n';
                 }
-            });
+                //img.onload = function(){ //TODO check if all images are loaded }
+                a.appendChild( img );
+
+                images.appendChild( li );
+
+            //	if( i > limitValue )
+            //		break;
+            }
         }
     }
 
@@ -107,17 +118,36 @@ class App {
 
 			//trace(window.location.search);
 
-            images = cast document.querySelector( 'ol.images' );
             form = cast document.querySelector( 'form' );
-            term = cast document.querySelector( 'form input[name=search]' );
+            term = cast document.querySelector( 'form input[name=term]' );
             precision = cast document.querySelector( 'form input[name=precision]' );
             limit = cast document.querySelector( 'form input[name=limit]' );
             info = cast document.querySelector( '.info' );
 
+            images = cast document.querySelector( 'ol.images' );
+
             term.focus();
+            //term.value = 'bikini';
+            //submit();
+
+            /*
+            var words : Array<Dynamic> = Json.parse( haxe.Resource.getString( 'words' ) );
+            trace(words.length);
+            var datalist = document.getElementById( 'terms_list' );
+            for( word in words ) {
+                var e = document.createOptionElement();
+                e.value = word;
+                datalist.appendChild( e );
+            }
+            */
 
 			window.onkeydown = function(e) {
+                trace(e.keyCode);
 				switch e.keyCode {
+                //case 83: // S
+                    //term.focus();
+                    //e.preventDefault();
+                    //term.select();
 				case 13: // Enter
                     submit();
 				}

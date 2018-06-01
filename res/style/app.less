@@ -7,8 +7,8 @@ body {
 	padding: 0;
 	overflow-y: scroll;
 
-	background: #050505;
-	color: #f0f0f0;
+	background: #000;
+	color: #fff;
 
 	font-family: monospace;
 	font-size: 14px;
@@ -19,7 +19,7 @@ button, input, option, select {
 	-webkit-appearance: none;
 
 	position: relative;
-	padding: 4px 10px;
+	//padding: 4px 10px;
 	box-sizing: border-box;
 	vertical-align: middle;
 	/*
@@ -41,7 +41,20 @@ button, input, option, select {
 }
 
 input:focus {
-	border: 1px solid #ff0000;
+	//border: 1px solid #ff0000;
+}
+
+*:focus {
+    outline: none;
+}
+
+::placeholder {
+    color: #fff;
+    opacity: 1; /* Firefox */
+}
+
+input[type=number] {
+	width: 50px;
 }
 
 ol, li {
@@ -64,11 +77,19 @@ form.controls {
 	right: 0px;
 	display: table;
 	z-index: 1000;
-	padding: 2px 10px 4px 4px;
+	padding: 2px 6px 3px 4px;
 	background: #000;
+
+	input[name=term] {
+		width: 80px;
+	}
 
 	.info {
 		display: inline-block;
+		-webkit-user-select: none;
+		text-transform: uppercase;
+		vertical-align: middle;
+		cursor: default;
 	}
 }
 
@@ -77,6 +98,7 @@ ol.images {
 	column-count: 5;
   	column-gap: 0px;
 	li {
+		padding: 1px 0px 0px 1px;
 		img {
 			width: 100% !important;
   			height: auto !important;

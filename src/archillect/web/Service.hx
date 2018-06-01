@@ -4,24 +4,49 @@ class Service {
 
     static var data : Array<ImageMetaData>;
 
+    //static var req
+    //static var res
+
     //TODO sort by precision
     static function search( term : String, ?precision : Float, ?limit : Int ) {
+
         term = term.toLowerCase();
         println( 'Searching: $term (precision:$precision,limit:$limit)' );
+
         var result = new Array<ImageMetaData>();
+
         for( i in 0...data.length ) {
+
             var meta = data[i];
+
             if( meta.classification == null )
                 continue;
+
             for( cl in meta.classification ) {
-                if( cl.name.toLowerCase() == term ) {
-                    if( precision != null && precision > 0 && cl.precision < precision )
-                        continue;
+
+                var clName = cl.name.toLowerCase();
+
+                if( precision != null && precision > 0 && cl.precision < precision )
+                    continue;
+
+                var clWords : Array<String> = clName.split( ' ' );
+                for( word in clWords ) {
+                    if( word == term ) {
+                        result.push( meta );
+                        break;
+                    }
+                }
+
+                /*
+                if( clName == term ) {
                     result.push( meta );
                 }
+                */
             }
+
             if( limit != null && limit > 0 && result.length >= limit )
                 break;
+
         }
         return result;
     }
@@ -55,6 +80,7 @@ class Service {
             data = Json.parse( r.toString() );
             println( data.length + ' items loaded into memory' );
 
+            /*
             var n720 = 0;
             for( meta in data ) {
                 if( meta.width >= 1280 && meta.height >= 720 ) {
@@ -62,8 +88,8 @@ class Service {
                 }
             }
             trace(n720);
-
             return;
+            */
 
             Http.createServer( (req,res) -> {
                 var url = Url.parse( req.url, true );
