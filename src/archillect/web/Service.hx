@@ -7,7 +7,6 @@ class Service {
     //static var req
     //static var res
 
-    //TODO sort by precision
     static function search( term : String, ?precision : Float, ?limit : Int ) {
 
         term = term.toLowerCase();

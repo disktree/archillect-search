@@ -2,6 +2,7 @@ package archillect.web;
 
 import js.html.DivElement;
 import js.html.FormElement;
+import js.html.ImageElement;
 import js.html.InputElement;
 import js.html.OListElement;
 import js.html.SelectElement;
@@ -65,7 +66,7 @@ class App {
         }
     }
 
-    static function handleSearchResult( found:Array<ImageMetaData> ) {
+    static function handleSearchResult( found : Array<ImageMetaData> ) {
 
         data = found;
 
@@ -75,8 +76,8 @@ class App {
 
             info.textContent = data.length+' items found';
 
-            trace( data.length+' items found' );
-            trace( data );
+            //trace( data.length+' items found' );
+            //trace( data );
 
             //TODO sort
             //var sort = cast document.querySelector( 'form select[name=sort]' );
@@ -102,14 +103,27 @@ class App {
                 for( c in meta.classification ) {
                     img.title += '\t'+c.name+': '+c.precision+'\n';
                 }
-                //img.onload = function(){ //TODO check if all images are loaded }
+                //img.onload = function(){  }
                 a.appendChild( img );
-
                 images.appendChild( li );
 
-            //	if( i > limitValue )
-            //		break;
+                //img.style.opacity = '1';
             }
+
+            /*
+            function loadNextImage( i : Int ) {
+                var meta = data[i];
+                var img : ImageElement = cast images.children[i].firstChild.firstChild;
+                trace( meta );
+                trace( img );
+                img.src = meta.url;
+                if( i < data.length-1 ) {
+                    img.onload = function(){
+                        loadNextImage( ++i );
+                    }
+                }
+            }(0);
+            */
         }
     }
 
@@ -128,8 +142,8 @@ class App {
             images = cast document.querySelector( 'ol.images' );
 
             term.focus();
-            term.value = 'bikini';
-            submitSearch();
+            //term.value = 'bikini';
+            //submitSearch();
 
             /*
             var words : Array<Dynamic> = Json.parse( haxe.Resource.getString( 'words' ) );
@@ -142,8 +156,18 @@ class App {
             }
             */
 
+            /*
+            var storage = js.Browser.getLocalStorage();
+            var settings = Json.parse( storage.getItem( 'archillect' ) );
+            if( settings != null ) {
+                precision.value = Std.string( settings.precision );
+                limit.value = Std.string( settings.limit );
+                term.value = Std.string( settings.term );
+            }
+            */
+
 			window.onkeydown = function(e) {
-                trace(e.keyCode);
+                //trace(e.keyCode);
 				switch e.keyCode {
                 //case 83: // S
                     //term.focus();
@@ -154,13 +178,26 @@ class App {
 				}
 			}
 
-			/*
-			window.onblur = function(e) {
-				form.style.opacity = '0';
-			}
-			window.onfocus = function(e) {
-				form.style.opacity = '1';
-			}
+            /*
+            window.onbeforeunload = function(e){
+                storage.setItem( 'archillect', Json.stringify( {
+                    precision: Std.parseFloat( precision.value ),
+                    limit: Std.parseInt( limit.value ),
+                    term: term.value
+                } ) );
+                return null;
+            }
+            */
+
+            /*
+            window.onblur = function(e) {
+                form.classList.add( 'hidden' );
+                //form.style.opacity = '0';
+            }
+            window.onfocus = function(e) {
+                form.classList.remove( 'hidden' );
+                //form.style.opacity = '1';
+            }
 			*/
 
 			/*

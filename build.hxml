@@ -1,7 +1,7 @@
 -cp src
 -lib om.core
 -dce full
--debug
+#-debug
 --each
 
 --next
@@ -13,7 +13,7 @@
 --next
 -js web/app.js
 -main archillect.web.App
--r res/data/words.json@words
+#-r res/data/words.json@words
 -cmd cp -ru res/html/app.html web/index.html
 -cmd cp -u res/data/words.json web/
 -cmd lessc res/style/app.less web/app.css --no-color
