@@ -1,5 +1,6 @@
 package archillect.web;
 
+import js.html.ButtonElement;
 import js.html.DivElement;
 import js.html.FormElement;
 import js.html.ImageElement;
@@ -21,6 +22,7 @@ class App {
     static var term : InputElement;
     static var precision : InputElement;
     static var limit : InputElement;
+    static var button : ButtonElement;
     //static var sort : SelectElement;
     static var info : DivElement;
 
@@ -70,11 +72,12 @@ class App {
 
         data = found;
 
+        info.textContent = data.length+' items found';
+
         if( data.length == 0 ) {
             window.alert( '0 items found' );
+            button.blur();
         } else {
-
-            info.textContent = data.length+' items found';
 
             //trace( data.length+' items found' );
             //trace( data );
@@ -137,6 +140,7 @@ class App {
             term = cast document.querySelector( 'form input[name=term]' );
             precision = cast document.querySelector( 'form input[name=precision]' );
             limit = cast document.querySelector( 'form input[name=limit]' );
+            button = cast document.querySelector( 'form button[name=submit]' );
             info = cast document.querySelector( '.info' );
 
             images = cast document.querySelector( 'ol.images' );
@@ -165,6 +169,10 @@ class App {
                 term.value = Std.string( settings.term );
             }
             */
+
+            button.onclick = function(e){
+                submitSearch();
+            }
 
 			window.onkeydown = function(e) {
                 //trace(e.keyCode);
