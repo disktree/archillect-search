@@ -2,7 +2,7 @@
 # ARCHILLECT-SEARCH
 
 >  [Archillect](http://archillect.com/) image classification and search experiment.
-> https://twitter.com/disktree/status/1005880899349688321
+
 
 ![](https://pbs.twimg.com/media/DfbIqw3XkAgv5IJ.jpg:large)
 
