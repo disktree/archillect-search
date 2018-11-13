@@ -1,0 +1,8 @@
+-js bin/service.js
+-main archillect.web.Service
+-lib hxargs
+-lib hxnodejs
+-lib om.core
+-cp src
+-dce full
+-debug
