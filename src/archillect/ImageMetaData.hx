@@ -1,13 +1,49 @@
 package archillect;
 
+typedef Color = {
+	var r : Int;
+	var g : Int;
+	var b : Int;
+	var a : Float;
+}
+
+typedef Classification = {
+	var name : String;
+	var precision : Float;
+}
+
 typedef ImageMetaData = {
+
+	/** Index **/
 	var index : Int;
+
+	/****/
 	var url : String;
-	@:optional var type : String;
-	@:optional var size : Int;
-	@:optional var width : Int;
-	@:optional var height : Int;
-	@:optional var brightness : Int;
-	@:optional var classification : Array<Dynamic>;
-	@:optional var face : Dynamic; //FaceData;
+
+	/** File type **/
+	var type : String;
+
+	/** File size **/
+	var size : Null<Int>;
+
+	/****/
+	var width : Null<Int>;
+
+	/****/
+	var height : Null<Int>;
+
+	/****/
+	var colorSpace : String;
+
+	/** Dominant color **/
+	var color : Color;
+
+	/** Brightness **/
+	//var brightness : Int;
+	var brightness : Float;
+
+	/***/
+	var classification : Array<Classification>;
+
+	//var face : Dynamic; //FaceData;
 }
