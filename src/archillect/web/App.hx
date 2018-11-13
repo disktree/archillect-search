@@ -11,89 +11,47 @@ import om.FetchTools;
 
 class App {
 
-    //static inline var HOST = 'localhost';
     static inline var HOST = '195.201.41.121';
     static inline var PORT = 7777;
 
-    static var data : Array<ImageMetaData>;
-
-    static var images : OListElement;
     static var form : FormElement;
     static var term : InputElement;
     static var precision : InputElement;
     static var limit : InputElement;
     static var button : ButtonElement;
-    //static var sort : SelectElement;
     static var info : DivElement;
-
-    static function search( term : String, ?precision : Float, ?limit : Int ) : Promise<Array<ImageMetaData>> {
-
-        var url = 'http://$HOST:$PORT/?term=$term';
-        if( precision != null ) url += '&precision=$precision';
-        if( limit != null ) url += '&limit=$limit';
-
-        return FetchTools.fetchJson( url, {
-            //
-        }).then( function(found:Array<ImageMetaData>){
-            return found;
-        });
-
-        /*
-        return FetchTools.fetchJson( 'http://$HOST:$PORT', {
-            method: "POST",
-            body: Json.stringify( {
-                term: term,
-                precision: precision,
-                limit: limit
-            } )
-        } ).then( function(found:Array<ImageMetaData>){
-            return found;
-        });
-        */
-    }
+	//static var sort : SelectElement;
+	static var images : OListElement;
 
     static function submitSearch() {
-
         var str = term.value.trim();
         if( str.length >= 2 ) {
-
             str = str.toLowerCase();
-            images.innerHTML = '';
-            info.textContent = 'searching ...';
-
-            var precisionValue = Std.parseFloat( precision.value );
-            var limitValue = Std.parseInt( limit.value );
-
-            search( str, precisionValue, limitValue ).then( handleSearchResult );
+            search( str, Std.parseFloat( precision.value ), Std.parseInt( limit.value ) ).then( handleSearchResult );
+			images.innerHTML = '';
+			info.textContent = 'searching ...';
         }
     }
 
-    static function handleSearchResult( found : Array<ImageMetaData> ) {
+	static function search( term : String, ?precision : Float, ?limit : Int ) : Promise<Array<ImageMetaData>> {
+        var url = 'http://$HOST:$PORT/?term=$term';
+        if( precision != null ) url += '&precision=$precision';
+        if( limit != null ) url += '&limit=$limit';
+        return cast FetchTools.fetchJson( url );
+    }
 
-        data = found;
+    static function handleSearchResult( data : Array<ImageMetaData> ) {
 
         info.textContent = data.length+' items found';
 
-        if( data.length == 0 ) {
-            window.alert( '0 items found' );
-            button.blur();
-        } else {
-
-            //trace( data.length+' items found' );
-            //trace( data );
-
-            //TODO sort
-            //var sort = cast document.querySelector( 'form select[name=sort]' );
-
-            var ol = document.createElement('ol');
-            ol.classList.add( 'images' );
-            document.body.appendChild( ol );
+        if( data.length > 0 ) {
 
             for( i in 0...data.length ) {
 
-                var meta = found[i];
+                var meta = data[i];
 
                 var li = document.createLIElement();
+				images.appendChild( li );
 
                 var a = document.createAnchorElement();
                 a.target = '_blank';
@@ -106,48 +64,28 @@ class App {
                 for( c in meta.classification ) {
                     img.title += '\t'+c.name+': '+c.precision+'\n';
                 }
-                //img.onload = function(){  }
                 a.appendChild( img );
-                images.appendChild( li );
-
-                //img.style.opacity = '1';
             }
-
-            /*
-            function loadNextImage( i : Int ) {
-                var meta = data[i];
-                var img : ImageElement = cast images.children[i].firstChild.firstChild;
-                trace( meta );
-                trace( img );
-                img.src = meta.url;
-                if( i < data.length-1 ) {
-                    img.onload = function(){
-                        loadNextImage( ++i );
-                    }
-                }
-            }(0);
-            */
-        }
+        } else {
+			window.alert( '0 items found' );
+            button.blur();
+		}
     }
 
     static function main() {
 
 		window.onload = function(){
 
-			//trace(window.location.search);
+			info = cast document.querySelector( '.info' );
+			images = cast document.querySelector( 'ol.images' );
 
             form = cast document.querySelector( 'form' );
-            term = cast document.querySelector( 'form input[name=term]' );
-            precision = cast document.querySelector( 'form input[name=precision]' );
-            limit = cast document.querySelector( 'form input[name=limit]' );
-            button = cast document.querySelector( 'form button[name=submit]' );
-            info = cast document.querySelector( '.info' );
-
-            images = cast document.querySelector( 'ol.images' );
+            term = cast form.querySelector( 'input[name=term]' );
+            precision = cast form.querySelector( 'input[name=precision]' );
+            limit = cast form.querySelector( 'input[name=limit]' );
+            button = cast form.querySelector( 'button[name=submit]' );
 
             term.focus();
-            //term.value = 'bikini';
-            //submitSearch();
 
             /*
             var words : Array<Dynamic> = Json.parse( haxe.Resource.getString( 'words' ) );
@@ -157,16 +95,6 @@ class App {
                 var e = document.createOptionElement();
                 e.value = word;
                 datalist.appendChild( e );
-            }
-            */
-
-            /*
-            var storage = js.Browser.getLocalStorage();
-            var settings = Json.parse( storage.getItem( 'archillect' ) );
-            if( settings != null ) {
-                precision.value = Std.string( settings.precision );
-                limit.value = Std.string( settings.limit );
-                term.value = Std.string( settings.term );
             }
             */
 
@@ -185,28 +113,6 @@ class App {
                     submitSearch();
 				}
 			}
-
-            /*
-            window.onbeforeunload = function(e){
-                storage.setItem( 'archillect', Json.stringify( {
-                    precision: Std.parseFloat( precision.value ),
-                    limit: Std.parseInt( limit.value ),
-                    term: term.value
-                } ) );
-                return null;
-            }
-            */
-
-            /*
-            window.onblur = function(e) {
-                form.classList.add( 'hidden' );
-                //form.style.opacity = '0';
-            }
-            window.onfocus = function(e) {
-                form.classList.remove( 'hidden' );
-                //form.style.opacity = '1';
-            }
-			*/
 
 			/*
 				var words = document.querySelector( '.words' );

@@ -5,6 +5,4 @@
 -lib om.core
 -dce full
 -debug
-#-cmd cp -ru res/html/app.html web/index.html
-#-cmd cp -u res/data/words.json web/
 -cmd lessc web/app.less web/app.css --no-color

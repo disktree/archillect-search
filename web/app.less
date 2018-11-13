@@ -1,44 +1,42 @@
 
 body {
-
 	margin: 0;
 	padding: 0;
 	overflow-y: scroll;
-
+	font-family: monospace;
 	background: #000;
 	color: #fff;
+}
 
-	font-family: monospace;
-	font-size: 14px;
+::-webkit-scrollbar {
+	border: none;
+	width: 6px;
+}
+::-webkit-scrollbar::horizontal,
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-corner {
+	display: none !important;
+}
+::-webkit-scrollbar-track {
+	background: #000;
+}
+::-webkit-scrollbar-thumb {
+	background: #fff;
+	&:hover {
+		//background: var(--f-med);
+	}
 }
 
 button, input, option, select {
-
 	-webkit-appearance: none;
-
-	/*
-	display: inline-block;
-	position: relative;
-	//padding: 4px 10px;
-	box-sizing: border-box;
-	vertical-align: middle;
-	min-width: 10px;
-	height: 36px;
-	line-height: 20px;
-	*/
 	padding: 0;
 	margin: 0;
-
 	font-family: monospace;
-	font-size: 14px;
-
 	text-decoration: none;
 	text-transform: uppercase;
-
-	background: #000;
-	color: #fff;
 	border: none;
-	//border: 1px solid #fff;
+	background: #fff;
+	color: #000;
 }
 
 button, input:focus {
@@ -64,6 +62,7 @@ input[type=number] {
 }
 
 ol, li {
+	list-style: none;
 	margin: 0;
 	padding: 0;
 }
@@ -76,7 +75,6 @@ option {
 */
 
 form.controls {
-
 	position: fixed;
 	top: 2px;
 	left: 2px;
@@ -84,24 +82,32 @@ form.controls {
 	display: table;
 	z-index: 1000;
 	transition: opacity 0.2s;
-
+	/*
+	&.hidden {
+		opacity: 0;
+		//top: -50px;
+	}
+	*/
 	* {
 		display: inline-block;
 		margin-right: 1px;
 		padding: 4px 7px 6px 6px;
 		height: 100%;
-		background: #000;
 		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.4);
 		opacity: 0.9;
 		&:focus {
 			opacity: 1;
 		}
 	}
-
 	input[name=term] {
+		//width: 80px;
+	}
+	input[name=limit] {
 		width: 80px;
 	}
-
+	input[name=precision] {
+		width: 80px;
+	}
 	.info {
 		vertical-align: top;
 		position: relative;
@@ -110,29 +116,18 @@ form.controls {
 		-webkit-user-select: none;
 		cursor: default;
 		//color: #3f3f3f;
+		background: #000;
 		opacity: 0.7;
-		font-size: 14px;
 		text-transform: uppercase;
 	}
-
-	/*
-	&.hidden {
-		opacity: 0;
-		//top: -50px;
-	}
-	*/
 }
 
 ol.images {
-
 	line-height: 0;
 	column-count: 5;
   	column-gap: 0px;
-
 	li {
-
 		padding: 1px 0px 0px 1px;
-
 		img {
 			//display: inline;
 			width: 100% !important;
@@ -142,7 +137,6 @@ ol.images {
 			//user-drag: none;
 			//-webkit-user-drag: none;
 			//margin: 1px;
-
 		}
 		img:hover {
 			//opacity: 1;
