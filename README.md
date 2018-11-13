@@ -22,14 +22,14 @@ http://rrr.disktree.net/archillect/meta/1.json
  - `type` Image files type (jpg,png,gif)
  - `size` Image file size (bytes)
  - `color` Dominant image color
-  - `r` Red
-  - `g` Green
-  - `b` Blue
-  - `a` Alpha
+ 	- `r` Red
+  	- `g` Green
+  	- `b` Blue
+  	- `a` Alpha
  - `brightness` Total image brightness
  - `classification` Image recognition classification list
-  - `name` Classification word
-  - `precision` Classification precision (0.0-1.0)
+ 	- `name` Classification word
+ 	- `precision` Classification precision (0.0-1.0)
 
 
 ### Classification wordlist
