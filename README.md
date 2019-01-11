@@ -1,5 +1,5 @@
 
-# ARCHILLECT-SEARCH
+# |  |  | ARCHILLECT-SEARCH
 
 >  [Archillect](http://archillect.com/) image classification and search experiment.
 >  http://archillect.disktree.net/search/
