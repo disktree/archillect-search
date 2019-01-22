@@ -39,7 +39,6 @@ typedef ImageMetaData = {
 	var color : Color;
 
 	/** Brightness **/
-	//var brightness : Int;
 	var brightness : Float;
 
 	/***/

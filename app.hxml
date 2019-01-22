@@ -1,0 +1,8 @@
+-js app/app.js
+-main archillect.search.App
+#-r res/data/words.json@words
+-cp src
+-lib om.core
+-dce full
+-debug
+-cmd lessc app/app.less app/app.css --no-color

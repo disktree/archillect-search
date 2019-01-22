@@ -1,4 +1,4 @@
-package archillect.web;
+package archillect.search;
 
 import js.html.ButtonElement;
 import js.html.DivElement;
@@ -11,7 +11,9 @@ import om.FetchTools;
 
 class App {
 
-    static inline var HOST = '195.201.41.121';
+    //static inline var HOST = '127.0.0.1';
+    //static inline var HOST = '192.168.0.10';
+	static inline var HOST = '195.201.41.121';
     static inline var PORT = 7777;
 
     static var form : FormElement;

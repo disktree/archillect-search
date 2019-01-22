@@ -1,3 +1,4 @@
-bin/
-web/app.css
-web/app.js*
+bin/*.js*
+bin/*.json
+app/app.css
+app/app.js*

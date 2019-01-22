@@ -1,8 +1,11 @@
 -js bin/service.js
--main archillect.web.Service
+-main archillect.search.Service
 -lib hxargs
 -lib hxnodejs
 -lib om.core
+-lib om.net
 -cp src
 -dce full
 -debug
+-D source-header=
+--macro includeFile('shebang_header')

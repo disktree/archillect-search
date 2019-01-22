@@ -1,16 +1,13 @@
-package archillect.web;
+package archillect.search;
 
 class Service {
 
     static var data : Array<ImageMetaData>;
 
-    //static var req
-    //static var res
-
     static function search( term : String, ?precision : Float, ?limit : Int ) {
 
         term = term.toLowerCase();
-        println( 'Searching: $term (precision:$precision,limit:$limit)' );
+        //println( 'Searching: $term (precision:$precision,limit:$limit)' );
 
         var result = new Array<ImageMetaData>();
 
@@ -47,9 +44,14 @@ class Service {
         return result;
     }
 
+	static function exit( ?msg : Dynamic, code = 0 ) {
+		if( msg != null ) println( msg );
+		Sys.exit( code );
+	}
+
     static function main() {
 
-        var host = 'localhost';
+        var host : String = null;
         var port = 7777;
         var file = 'archillect.json';
 
@@ -59,12 +61,17 @@ class Service {
             @doc("Port number") ["-port"] => (number:Int) -> port = number,
             @doc("Meta data file") ["-meta"] => (path:String) -> file = path,
             _ => (arg:String) -> {
-                println( 'Unknown command: $arg' );
-                println( argsHandler.getDoc() );
-                Sys.exit(1);
+                exit( 'Unknown command: $arg\n'+argsHandler.getDoc(), 1 );
 	        }
         ]);
         argsHandler.parse( Sys.args() );
+
+		switch host {
+		case null,'auto':
+			host = om.Network.getLocalIP()[0];
+			if( host == null ) exit( 'failed to resolve host name', 1 );
+		default:
+		}
 
         Fs.readFile( file, (e,r) -> {
 
@@ -76,6 +83,7 @@ class Service {
             data = Json.parse( r.toString() );
             println( data.length + ' items loaded into memory' );
 
+            println( 'Starting service $host:$port' );
 
             Http.createServer( (req,res) -> {
                 var url = Url.parse( req.url, true );
@@ -87,8 +95,11 @@ class Service {
                 } else {
                     var precision = (query.precision != null) ? Std.parseFloat( query.precision ) : 0;
                     var limit = (query.limit != null) ? Std.parseInt( query.limit ) : 0;
-                    var found = search( query.term, precision, limit );
-                    println( 'Found: '+found.length );
+					var term = query.term.toLowerCase();
+					print( '${req.socket.remoteAddress} $term $precision $limit' );
+                    var found = search( term, precision, limit );
+					println( ' : '+found.length );
+                    //println( 'Found: '+found.length );
                     res.writeHead( 200, {
                         'Access-Control-Allow-Origin': '*',
                         'Content-Type': 'application/json'
@@ -101,12 +112,10 @@ class Service {
                     var str = '';
                     req.on( 'data', chunk -> str += chunk );
                     req.on( 'end', function(){
-
                         var json = Json.parse( str );
                         trace(json);
                         var found = search( json.term, json.precision, json.limit );
                         trace( 'Found: '+found.length );
-
                         res.writeHead( 200, {
                             'Access-Control-Allow-Origin': '*',
                             'Content-Type': 'application/json'
