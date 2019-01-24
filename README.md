@@ -7,13 +7,16 @@
 ![](https://pbs.twimg.com/media/DfbIqw3XkAgv5IJ.jpg:large)
 
 
-### Data service
+### API/Service
 
-Request meta data like [index:0-170000]:
-http://rrr.disktree.net/archillect/meta/1.json
+Example request to get meta data for the term **cat** with at least recognition precision of **0.5** and limit the results to **10**:
+http://195.201.41.121:7777/?term=cat&precision=0.5&limit=10
+
+Static image meta data files can be accessed by index like:
+http://195.201.41.121/archillect/meta/1.json
 
 
-#### Available fields
+#### Meta data fields
 
  - `index` Image index
  - `url` Image url
@@ -32,6 +35,6 @@ http://rrr.disktree.net/archillect/meta/1.json
  	- `precision` Classification precision (0.0-1.0)
 
 
-### Classification wordlist
+#### Classification wordlist
 
 https://gist.github.com/tong/b0e4570fa1a7f8142ff90100fbb84521#file-archillect-words-txt
