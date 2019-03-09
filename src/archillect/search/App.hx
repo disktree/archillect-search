@@ -1,5 +1,7 @@
 package archillect.search;
 
+#if (js&&!nodejs)
+
 import js.html.ButtonElement;
 import js.html.DivElement;
 import js.html.FormElement;
@@ -131,3 +133,5 @@ class App {
     }
 
 }
+
+#end

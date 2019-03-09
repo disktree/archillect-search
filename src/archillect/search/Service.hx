@@ -1,5 +1,7 @@
 package archillect.search;
 
+#if nodejs
+
 class Service {
 
     static var data : Array<ImageMetaData>;
@@ -130,3 +132,5 @@ class Service {
     }
 
 }
+
+#end
