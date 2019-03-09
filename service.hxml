@@ -1,5 +1,6 @@
 -js bin/service.js
 -main archillect.search.Service
+-lib archillect
 -lib hxargs
 -lib hxnodejs
 -lib om.core
