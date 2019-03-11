@@ -13,8 +13,6 @@ import om.FetchTools;
 
 class App {
 
-    //static inline var HOST = '127.0.0.1';
-    //static inline var HOST = '192.168.0.10';
 	static inline var HOST = '195.201.41.121';
     static inline var PORT = 7777;
 
@@ -89,7 +87,15 @@ class App {
             limit = cast form.querySelector( 'input[name=limit]' );
             button = cast form.querySelector( 'button[name=submit]' );
 
-            term.focus();
+			var params = new js.html.URLSearchParams( window.location.search );
+			if( params.has( 'precision' ) ) precision.value = params.get( 'precision' );
+			if( params.has( 'limit' ) ) limit.value = params.get( 'limit' );
+			if( params.has( 'term' ) ) {
+				term.value = params.get( 'term' );
+				submitSearch();
+			}
+            
+			term.focus();
 
             /*
             var words : Array<Dynamic> = Json.parse( haxe.Resource.getString( 'words' ) );
