@@ -9,6 +9,7 @@ import js.html.ImageElement;
 import js.html.InputElement;
 import js.html.OListElement;
 import js.html.SelectElement;
+import js.html.URLSearchParams;
 import om.FetchTools;
 
 class App {
@@ -36,10 +37,11 @@ class App {
     }
 
 	static function search( term : String, ?precision : Float, ?limit : Int ) : Promise<Array<ImageMetaData>> {
-        var url = 'http://$HOST:$PORT/?term=$term';
-        if( precision != null ) url += '&precision=$precision';
-        if( limit != null ) url += '&limit=$limit';
-        return cast FetchTools.fetchJson( url );
+		var path = '?term=$term';
+		if( precision != null ) path += '&precision=$precision';
+        if( limit != null ) path += '&limit=$limit';
+		window.history.replaceState( '', '', path );
+		return FetchTools.fetchJson( 'http://$HOST:$PORT/$path' );
     }
 
     static function handleSearchResult( data : Array<ImageMetaData> ) {
@@ -87,7 +89,7 @@ class App {
             limit = cast form.querySelector( 'input[name=limit]' );
             button = cast form.querySelector( 'button[name=submit]' );
 
-			var params = new js.html.URLSearchParams( window.location.search );
+			var params = new URLSearchParams( window.location.search );
 			if( params.has( 'precision' ) ) precision.value = params.get( 'precision' );
 			if( params.has( 'limit' ) ) limit.value = params.get( 'limit' );
 			if( params.has( 'term' ) ) {
