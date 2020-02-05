@@ -1,5 +1,5 @@
-bin/*.js*
-bin/*.json
+service.js*
+archillect.json
 app/app.css*
 app/app.js*
 .vscode/

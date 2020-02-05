@@ -1,7 +1,5 @@
 package archillect.search;
 
-#if nodejs
-
 class Service {
 
     static var data : Array<ImageMetaData>;
@@ -90,14 +88,14 @@ class Service {
             Http.createServer( (req,res) -> {
                 var url = Url.parse( req.url, true );
                 var query : Dynamic = url.query;
-                var term = query.term;
+                var term = query.q;
                 if( term == null ) {
                     res.writeHead( 404, { "Content-Type": "text/plain" } );
                     res.end();
                 } else {
                     var precision = (query.precision != null) ? Std.parseFloat( query.precision ) : 0;
                     var limit = (query.limit != null) ? Std.parseInt( query.limit ) : 0;
-					var term = query.term.toLowerCase();
+					var term = query.q.toLowerCase();
 					print( '${req.socket.remoteAddress} $term $precision $limit' );
                     var found = search( term, precision, limit );
 					println( ' : '+found.length );
@@ -132,5 +130,3 @@ class Service {
     }
 
 }
-
-#end

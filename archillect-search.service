@@ -1,11 +1,11 @@
 [Unit]
 Description=Archillect search service
-Documentation=https://github.com/tong/archillect-search/blob/master/README.md
+Documentation=https://github.com/disktree/archillect-search/blob/master/README.md
 After=network.target
 
 [Service]
-WorkingDirectory=/home/tong/dev/pro/archillect/archillect-search/bin
-ExecStart=/home/tong/dev/pro/archillect/archillect-search/bin/service.js
+WorkingDirectory=/home/tong/dev/archillect-search
+ExecStart=/home/tong/dev/archillect-search/service.js
 Restart=always
 
 [Install]

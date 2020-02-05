@@ -27,7 +27,7 @@ class App {
     
     @:expose("search")
 	public static function search( term : String, ?precision : Float, ?limit : Int ) : Promise<Array<ImageMetaData>> {
-		var path = '?term=$term';
+		var path = '?q=$term';
 		if( precision != null ) path += '&precision=$precision';
         if( limit != null ) path += '&limit=$limit';
 		window.history.replaceState( '', '', path );
@@ -56,14 +56,14 @@ class App {
 
     static function handleSearchResult( data : Array<ImageMetaData> ) {
 
-        info.textContent = data.length+' items found';
+        info.textContent = data.length +' items found';
 
         if( data.length > 0 ) {
 
             for( i in 0...data.length ) {
 
                 var meta = data[i];
-                //trace(meta);
+                //trace(meta); 
 
                 var li = document.createLIElement();
                 //li.style.width = Std.string( meta.width )+'px';
