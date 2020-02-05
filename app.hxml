@@ -6,4 +6,5 @@
 -lib om.core
 -dce full
 -debug
--cmd lessc app/app.less app/app.css --no-color
+-D source-header=
+#-cmd lessc res/style/index.less app/app.css --no-color

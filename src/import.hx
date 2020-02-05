@@ -1,21 +1,22 @@
 
-import haxe.Json;
 import haxe.io.Bytes;
+import om.Json;
 
 using om.StringTools;
 
 #if js
-import js.Promise;
+import om.Promise;
 #if nodejs
 import js.Node.console;
 import js.node.Fs;
 import js.node.Http;
 import js.node.Url;
 #else
-import js.Browser.console;
-import js.Browser.document;
-import js.Browser.navigator;
-import js.Browser.window;
+import om.Browser;
+import om.Browser.console;
+import om.Browser.document;
+import om.Browser.navigator;
+import om.Browser.window;
 #end
 #end
 

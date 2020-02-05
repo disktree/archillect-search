@@ -23,25 +23,35 @@ class App {
     static var limit : InputElement;
     static var button : ButtonElement;
     static var info : DivElement;
-	//static var sort : SelectElement;
-	static var images : OListElement;
-
-    static function submitSearch() {
-        var str = term.value.trim();
-        if( str.length >= 2 ) {
-            str = str.toLowerCase();
-            search( str, Std.parseFloat( precision.value ), Std.parseInt( limit.value ) ).then( handleSearchResult );
-			images.innerHTML = '';
-			info.textContent = 'searching ...';
-        }
-    }
-
-	static function search( term : String, ?precision : Float, ?limit : Int ) : Promise<Array<ImageMetaData>> {
+    static var images : OListElement;
+    
+    @:expose("search")
+	public static function search( term : String, ?precision : Float, ?limit : Int ) : Promise<Array<ImageMetaData>> {
 		var path = '?term=$term';
 		if( precision != null ) path += '&precision=$precision';
         if( limit != null ) path += '&limit=$limit';
 		window.history.replaceState( '', '', path );
 		return FetchTools.fetchJson( 'http://$HOST:$PORT/$path' );
+    }
+
+    @:expose("clear")
+    public static function clear() {
+        document.body.classList.remove('result');
+        term.value = '';
+        info.textContent = '';
+        images.innerHTML = '';
+        term.focus();
+    }
+
+    static function submitSearch() {
+        var str = term.value.trim();
+        if( str.length > 2 ) {
+            str = str.toLowerCase();
+            document.body.classList.remove('result');
+            info.textContent = 'searching ...';
+            search( str, Std.parseFloat( precision.value ), Std.parseInt( limit.value ) )
+                .then( handleSearchResult );
+        }
     }
 
     static function handleSearchResult( data : Array<ImageMetaData> ) {
@@ -53,8 +63,11 @@ class App {
             for( i in 0...data.length ) {
 
                 var meta = data[i];
+                trace(meta);
 
                 var li = document.createLIElement();
+                //li.style.width = Std.string( meta.width )+'px';
+                //li.style.height = Std.string( meta.height )+'px';
 				images.appendChild( li );
 
                 var a = document.createAnchorElement();
@@ -62,42 +75,66 @@ class App {
                 a.href = 'http://archillect.com/'+meta.index;
                 li.appendChild( a );
 
+                //TODO placeholder while loading
+
                 var img = document.createImageElement();
                 img.src = meta.url;
                 img.title = 'Index: '+meta.index+'\n';
                 for( c in meta.classification ) {
-                    img.title += '\t'+c.name+': '+c.precision+'\n';
+                    img.title += '  '+c.name+': '+c.precision+'\n';
                 }
+                //img.onload = function(e){}
                 a.appendChild( img );
             }
+
+            document.body.classList.add('result');
+
         } else {
 			window.alert( '0 items found' );
             button.blur();
 		}
     }
 
+    static function updateInput() {
+        var str = term.value.trim();
+        if( str.length > 2 ) {
+            button.removeAttribute('disabled');
+        } else if( str.length == 0 ) {
+            clear();
+            button.setAttribute('disabled','');
+        } else {
+            button.setAttribute('disabled','');
+        }
+    }
+
     static function main() {
+
+        console.log( '%cARCHILLECT-SEARCH', 'color:#fff;background:#000;' );
 
 		window.onload = function(){
 
-			info = cast document.querySelector( '.info' );
-			images = cast document.querySelector( 'ol.images' );
+            var body = document.body;
 
-            form = cast document.querySelector( 'form' );
+			info = cast body.querySelector( '.info' );
+			images = cast body.querySelector( 'ol.images' );
+
+            form = cast body.querySelector( 'form' );
             term = cast form.querySelector( 'input[name=term]' );
             precision = cast form.querySelector( 'input[name=precision]' );
             limit = cast form.querySelector( 'input[name=limit]' );
             button = cast form.querySelector( 'button[name=submit]' );
 
-			var params = new URLSearchParams( window.location.search );
-			if( params.has( 'precision' ) ) precision.value = params.get( 'precision' );
-			if( params.has( 'limit' ) ) limit.value = params.get( 'limit' );
-			if( params.has( 'term' ) ) {
-				term.value = params.get( 'term' );
-				submitSearch();
-			}
+            term.addEventListener( 'input', function(e){
+                updateInput();
+            });
             
-			term.focus();
+            /*
+            term.addEventListener( 'click', function(e){
+                e.preventDefault();
+				e.stopPropagation();
+				term.select();
+            });
+            */
 
             /*
             var words : Array<Dynamic> = Json.parse( haxe.Resource.getString( 'words' ) );
@@ -115,16 +152,27 @@ class App {
             }
 
 			window.onkeydown = function(e) {
-                //trace(e.keyCode);
+                trace(e);
 				switch e.keyCode {
-                //case 83: // S
+                    //case 83: // S
                     //term.focus();
                     //e.preventDefault();
                     //term.select();
-				case 13: // Enter
+                case 13: // Enter
                     submitSearch();
+                case 67: // C
+                    if( e.ctrlKey ) clear();
 				}
-			}
+            }
+            
+            window.onmessage == function(e){
+                trace("TODO",e,e.data);
+                switch e.data {
+                case "clear": clear();
+                case "search":
+                    //TODO
+                }
+            }
 
 			/*
 				var words = document.querySelector( '.words' );
@@ -136,7 +184,18 @@ class App {
 					words.appendChild( e );
 				}
 			});
-			*/
+            */
+
+            term.focus();
+            
+            var params = new URLSearchParams( window.location.search );
+			if( params.has( 'precision' ) ) precision.value = params.get( 'precision' );
+			if( params.has( 'limit' ) ) limit.value = params.get( 'limit' );
+			if( params.has( 'term' ) ) {
+                term.value = params.get( 'term' );
+                updateInput();
+				//submitSearch();
+			}
 		}
     }
 

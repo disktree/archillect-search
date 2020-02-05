@@ -1,4 +1,5 @@
 bin/*.js*
 bin/*.json
-app/app.css
+app/app.css*
 app/app.js*
+.vscode/

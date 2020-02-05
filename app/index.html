@@ -11,7 +11,8 @@
 
 		<meta property="og:url" content="http://archillect.disktree.net/search/">
 		<meta property="og:site_name" content="Archillect Search">
-		<meta name="twitter:card" content="summary_large_image"/>
+        
+        <meta name="twitter:card" content="summary_large_image"/>
 		<meta name="twitter:site" content="@disktree"/>
 		<meta name="twitter:creator" content="@disktree"/>
         <meta name="twitter:title" content="Archillect Search"/>
@@ -20,7 +21,7 @@
 
         <title>ARCHILLECT-SEARCH</title>
 
-		<link rel="shortcut icon" href="http://disktree.net/favicon.ico">
+		<link rel="shortcut icon" href="https://disktree.net/favicon.ico">
         <link rel="stylesheet" href="reset.css">
         <link rel="stylesheet" href="app.css">
 
@@ -29,24 +30,28 @@
     </head>
 
     <body>
+        <header>
+            <h1>ARCHILLECT-SEARCH</h1>
+            <a href="http://archillect.disktree.net/search"><img src="logo_thick.svg"></a>
+        </header>
         <form class="controls">
-			<input type="text" name="term" placeholder="…" list="terms_list" title="TERM">
-			<button type="button" name="submit">SEARCH</button>
-            <input type="number" name="limit" value="100" min="1" max="1000000" step="1" title="LIMIT">
-            <input type="number" name="precision" value="0.1" min="0.0" max="1.0" step="0.01" title="PRECISION">
+            <div class="search">
+                <input type="search" name="term" placeholder="…" list="terms_list">
+                <button type="button" name="submit" disabled>SEARCH</button>
+            </div>
+            <div class="settings">
+                <input type="range" name="limit" value="100" min="1" max="1000000" step="1" title="LIMIT">
+                <input type="range" name="precision" value="0.1" min="0.0" max="1.0" step="0.01" title="PRECISION">
+            </div>
             <!--
             <datalist id="terms_list"></datalist>
             -->
-            <!--
-            <select class="sort" name="sort">
-                <option value="">SORT BY INDEX</option>
-                <option value="">SORT BY PRECISION</option>
-            </select>
-            -->
-            <div class="info"></div>
         </form>
+        <div class="info"></div>
         <ol class="images"></ol>
         <ul class="words"></ul>
+        <aside class="links"></aside>
+        <footer>https://disktree.net</footer>
     </body>
 
 </html>

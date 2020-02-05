@@ -1,32 +1,136 @@
 
+@image-width: 200px;
+
 body {
 	margin: 0;
 	padding: 0;
+	overflow-x: hidden;
 	overflow-y: scroll;
-	font-family: monospace;
-	background: #000;
-	color: #fff;
-}
+	
+	display: grid;
+	grid-template-rows: 192px 48px 48px 1fr;
+	grid-template-columns: 1fr;
+	justify-items: center;
 
-::-webkit-scrollbar {
-	border: none;
-	width: 6px;
-}
-::-webkit-scrollbar::horizontal,
-::-webkit-scrollbar-button,
-::-webkit-scrollbar-corner {
-	display: none !important;
-}
-::-webkit-scrollbar-track {
-	background: #000;
-}
-::-webkit-scrollbar-thumb {
-	background: #fff;
-	&:hover {
-		//background: var(--f-med);
+	&.result {
+		/*
+		background: red !important;
+		grid-template-rows: 48px 48px 1fr;
+		grid-template-columns: 1fr 1fr;
+		> header {
+			grid-column: 1 / span 1;
+		}
+		> form.controls {
+			grid-column: 2 ;
+		}
+		> ol.images {
+			grid-column: 1 / span 2;
+		}
+		*/
+	}
+
+	> header, > form.controls {
+		margin: 0 @D2;
+	}
+	> header {
+		place-self: center center;
+		user-select: none;
+		> h1 {
+			display: none;
+		}
+		> a {
+			cursor: default;
+			> img {
+				//width: @D4;
+				//height: @D4;
+			}
+		}
+	}
+	> form.controls {
+		place-self: center center;
+		min-width: 200px;
+		max-width: 300px;
+		width: 50vw;
+		user-select: none;
+		> .search {
+			> input {
+				width: 100%;
+			}
+			> button {
+				display: none;
+				//width: 100px;
+			}
+			
+		}
+		> .settings {
+			display: none;
+		}
+	}
+	> .info {
+		place-self: center center;
+		text-transform: uppercase;
+	}
+	> ol.images {
+		line-height: 0;
+		column-count: 5;
+		  column-gap: 0px;
+		> li {
+			padding: 1px 0px 0px 1px;
+			> a {
+				> img {
+					//display: none;
+					//display: inline;
+					width: 100% !important;
+					  //height: auto !important;
+					//transition: opacity 0.3s;
+					//opacity: 0.9;
+					//user-drag: none;
+					//-webkit-user-drag: none;
+					//margin: 1px;
+				}
+			}
+		}
+	}
+
+	@media (max-width: calc(@image-width*20))  { > ol.images { column-count: 20; } }
+	@media (max-width: calc(@image-width*19))  { > ol.images { column-count: 19; } }
+	@media (max-width: calc(@image-width*18))  { > ol.images { column-count: 18; } }
+	@media (max-width: calc(@image-width*17))  { > ol.images { column-count: 17; } }
+	@media (max-width: calc(@image-width*16))  { > ol.images { column-count: 16; } }
+	@media (max-width: calc(@image-width*15))  { > ol.images { column-count: 15; } }
+	@media (max-width: calc(@image-width*14))  { > ol.images { column-count: 14; } }
+	@media (max-width: calc(@image-width*13))  { > ol.images { column-count: 13; } }
+	@media (max-width: calc(@image-width*12))  { > ol.images { column-count: 12; } }
+	@media (max-width: calc(@image-width*11))  { > ol.images { column-count: 11; } }
+	@media (max-width: calc(@image-width*10))  { > ol.images { column-count: 10; } }
+	@media (max-width: calc(@image-width*9))   { > ol.images { column-count: 9; } }
+	@media (max-width: calc(@image-width*8))   { > ol.images { column-count: 8; } }
+	@media (max-width: calc(@image-width*7))   { > ol.images { column-count: 7; } }
+	@media (max-width: calc(@image-width*6))   { > ol.images { column-count: 6; } }
+	@media (max-width: calc(@image-width*5))   { > ol.images { column-count: 5; } }
+	@media (max-width: calc(@image-width*4))   { > ol.images { column-count: 4; } }
+	@media (max-width: calc(@image-width*3))   { > ol.images { column-count: 3; } }
+	@media (max-width: calc(@image-width*2))   { > ol.images { column-count: 2; } }
+	@media (max-width: calc(@image-width*1))   { > ol.images { column-count: 1; } }
+
+	> aside.links {
+		display: none;
+	}
+	
+	> footer {
+		display: none;
+	}
+
+	@media screen and (max-width:400px) {
+	}
+
+	@media screen and (min-width:700px) {
+		//grid-template-rows: 96px 100px 20px auto;
+
 	}
 }
 
+/*
 button, input, option, select {
 	-webkit-appearance: none;
 	padding: 0;
@@ -54,7 +158,7 @@ button, input:focus {
 
 ::placeholder {
     color: #ddd;
-    opacity: 1; /* Firefox */
+    opacity: 1; /* Firefox * /
 }
 
 input[type=number] {
@@ -72,7 +176,7 @@ option {
 	background: #000;
 	color: #fff;
 }
-*/
+* /
 
 form.controls {
 	position: fixed;
@@ -87,7 +191,7 @@ form.controls {
 		opacity: 0;
 		//top: -50px;
 	}
-	*/
+	* /
 	* {
 		display: inline-block;
 		margin-right: 1px;
@@ -166,3 +270,4 @@ ol.images {
 @media (max-width: calc(@column-width*3))  { ol.images { column-count: 3; } }
 @media (max-width: calc(@column-width*2))  { ol.images { column-count: 2; } }
 @media (max-width: calc(@column-width*1))  { ol.images { column-count: 1; } }
+*/
