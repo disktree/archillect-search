@@ -55,12 +55,14 @@ body {
 		> .search {
 			> input {
 				width: 100%;
+				&:focus {
+
+				}
 			}
 			> button {
 				display: none;
 				//width: 100px;
 			}
-			
 		}
 		> .settings {
 			display: none;
@@ -69,49 +71,33 @@ body {
 	> .info {
 		place-self: center center;
 		text-transform: uppercase;
+		user-select: none;
 	}
+
 	> ol.images {
-		line-height: 0;
-		column-count: 5;
-		  column-gap: 0px;
+		column-width: 200px;
+		column-gap: 0;
+		margin-bottom: 100px;
+		column-count: 10;
+		user-select: none;
 		> li {
-			padding: 1px 0px 0px 1px;
 			> a {
+				border: 1px solid #000;
+				&:focus {
+					border: 1px solid #fff;
+
+				}
+				break-inside: avoid;
+				position: relative;
+				width: 100%;
+				display: block;
 				> img {
-					//display: none;
-					//display: inline;
+					display: block;
 					width: 100% !important;
-					  //height: auto !important;
-					//transition: opacity 0.3s;
-					//opacity: 0.9;
-					//user-drag: none;
-					//-webkit-user-drag: none;
-					//margin: 1px;
 				}
 			}
 		}
 	}
-
-	@media (max-width: calc(@image-width*20))  { > ol.images { column-count: 20; } }
-	@media (max-width: calc(@image-width*19))  { > ol.images { column-count: 19; } }
-	@media (max-width: calc(@image-width*18))  { > ol.images { column-count: 18; } }
-	@media (max-width: calc(@image-width*17))  { > ol.images { column-count: 17; } }
-	@media (max-width: calc(@image-width*16))  { > ol.images { column-count: 16; } }
-	@media (max-width: calc(@image-width*15))  { > ol.images { column-count: 15; } }
-	@media (max-width: calc(@image-width*14))  { > ol.images { column-count: 14; } }
-	@media (max-width: calc(@image-width*13))  { > ol.images { column-count: 13; } }
-	@media (max-width: calc(@image-width*12))  { > ol.images { column-count: 12; } }
-	@media (max-width: calc(@image-width*11))  { > ol.images { column-count: 11; } }
-	@media (max-width: calc(@image-width*10))  { > ol.images { column-count: 10; } }
-	@media (max-width: calc(@image-width*9))   { > ol.images { column-count: 9; } }
-	@media (max-width: calc(@image-width*8))   { > ol.images { column-count: 8; } }
-	@media (max-width: calc(@image-width*7))   { > ol.images { column-count: 7; } }
-	@media (max-width: calc(@image-width*6))   { > ol.images { column-count: 6; } }
-	@media (max-width: calc(@image-width*5))   { > ol.images { column-count: 5; } }
-	@media (max-width: calc(@image-width*4))   { > ol.images { column-count: 4; } }
-	@media (max-width: calc(@image-width*3))   { > ol.images { column-count: 3; } }
-	@media (max-width: calc(@image-width*2))   { > ol.images { column-count: 2; } }
-	@media (max-width: calc(@image-width*1))   { > ol.images { column-count: 1; } }
 
 	> aside.links {
 		display: none;
@@ -126,148 +112,5 @@ body {
 
 	@media screen and (min-width:700px) {
 		//grid-template-rows: 96px 100px 20px auto;
-
 	}
 }
-
-/*
-button, input, option, select {
-	-webkit-appearance: none;
-	padding: 0;
-	margin: 0;
-	font-family: monospace;
-	text-decoration: none;
-	text-transform: uppercase;
-	border: none;
-	background: #fff;
-	color: #000;
-}
-
-button, input:focus {
-	//border: 1px solid #ff0000;
-}
-
-*:focus {
-    outline: none;
-}
-
-::selection {
-    background: #fff;
-    color: #000;
-}
-
-::placeholder {
-    color: #ddd;
-    opacity: 1; /* Firefox * /
-}
-
-input[type=number] {
-	width: 50px;
-}
-
-ol, li {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-/*
-option {
-	background: #000;
-	color: #fff;
-}
-* /
-
-form.controls {
-	position: fixed;
-	top: 2px;
-	left: 2px;
-	right: 2px;
-	display: table;
-	z-index: 1000;
-	transition: opacity 0.2s;
-	/*
-	&.hidden {
-		opacity: 0;
-		//top: -50px;
-	}
-	* /
-	* {
-		display: inline-block;
-		margin-right: 1px;
-		padding: 4px 7px 6px 6px;
-		height: 100%;
-		box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.4);
-		opacity: 0.9;
-		&:focus {
-			opacity: 1;
-		}
-	}
-	input[name=term] {
-		//width: 80px;
-	}
-	input[name=limit] {
-		width: 80px;
-	}
-	input[name=precision] {
-		width: 80px;
-	}
-	.info {
-		vertical-align: top;
-		position: relative;
-		height: 100%;
-		border: none;
-		-webkit-user-select: none;
-		cursor: default;
-		//color: #3f3f3f;
-		background: #000;
-		opacity: 0.7;
-		text-transform: uppercase;
-	}
-}
-
-ol.images {
-	line-height: 0;
-	column-count: 5;
-  	column-gap: 0px;
-	li {
-		padding: 1px 0px 0px 1px;
-		img {
-			//display: inline;
-			width: 100% !important;
-  			//height: auto !important;
-			//transition: opacity 0.3s;
-			//opacity: 0.9;
-			//user-drag: none;
-			//-webkit-user-drag: none;
-			//margin: 1px;
-		}
-		img:hover {
-			//opacity: 1;
-		}
-	}
-}
-
-@column-width: 200px;
-
-@media (max-width: calc(@column-width*20))  { ol.images { column-count: 20; } }
-@media (max-width: calc(@column-width*19))  { ol.images { column-count: 19; } }
-@media (max-width: calc(@column-width*18))  { ol.images { column-count: 18; } }
-@media (max-width: calc(@column-width*17))  { ol.images { column-count: 17; } }
-@media (max-width: calc(@column-width*16))  { ol.images { column-count: 16; } }
-@media (max-width: calc(@column-width*15))  { ol.images { column-count: 15; } }
-@media (max-width: calc(@column-width*14))  { ol.images { column-count: 14; } }
-@media (max-width: calc(@column-width*13))  { ol.images { column-count: 13; } }
-@media (max-width: calc(@column-width*12))  { ol.images { column-count: 12; } }
-@media (max-width: calc(@column-width*11))  { ol.images { column-count: 11; } }
-@media (max-width: calc(@column-width*10))  { ol.images { column-count: 10; } }
-@media (max-width: calc(@column-width*9))  { ol.images { column-count: 9; } }
-@media (max-width: calc(@column-width*8))  { ol.images { column-count: 8; } }
-@media (max-width: calc(@column-width*7))  { ol.images { column-count: 7; } }
-@media (max-width: calc(@column-width*6))  { ol.images { column-count: 6; } }
-@media (max-width: calc(@column-width*5))  { ol.images { column-count: 5; } }
-@media (max-width: calc(@column-width*4))  { ol.images { column-count: 4; } }
-@media (max-width: calc(@column-width*3))  { ol.images { column-count: 3; } }
-@media (max-width: calc(@column-width*2))  { ol.images { column-count: 2; } }
-@media (max-width: calc(@column-width*1))  { ol.images { column-count: 1; } }
-*/

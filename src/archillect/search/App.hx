@@ -63,7 +63,7 @@ class App {
             for( i in 0...data.length ) {
 
                 var meta = data[i];
-                trace(meta);
+                //trace(meta);
 
                 var li = document.createLIElement();
                 //li.style.width = Std.string( meta.width )+'px';
@@ -152,11 +152,11 @@ class App {
             }
 
 			window.onkeydown = function(e) {
-                trace(e);
+               //trace(e);
 				switch e.keyCode {
-                    //case 83: // S
-                    //term.focus();
+                //case 83: // S
                     //e.preventDefault();
+                    //term.focus();
                     //term.select();
                 case 13: // Enter
                     submitSearch();
@@ -194,7 +194,7 @@ class App {
 			if( params.has( 'term' ) ) {
                 term.value = params.get( 'term' );
                 updateInput();
-				//submitSearch();
+				submitSearch();
 			}
 		}
     }
