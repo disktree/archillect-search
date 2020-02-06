@@ -2,6 +2,7 @@
 @image-width: 200px;
 
 body {
+
 	margin: 0;
 	padding: 0;
 	overflow-x: hidden;
@@ -53,10 +54,11 @@ body {
 		width: 50vw;
 		user-select: none;
 		> .search {
+			width: 100%;
+			margin-bottom: @D2;
 			> input {
 				width: 100%;
 				&:focus {
-
 				}
 			}
 			> button {
@@ -65,6 +67,7 @@ body {
 			}
 		}
 		> .settings {
+			text-align: center;
 			display: none;
 		}
 	}
@@ -73,7 +76,6 @@ body {
 		text-transform: uppercase;
 		user-select: none;
 	}
-
 	> ol.images {
 		column-width: 200px;
 		column-gap: 0;
@@ -98,19 +100,15 @@ body {
 			}
 		}
 	}
-
-	> aside.links {
-		display: none;
-	}
 	
 	> footer {
 		display: none;
 	}
 
-	@media screen and (max-width:400px) {
+	@media screen and (max-width:599) {
 	}
 
-	@media screen and (min-width:700px) {
+	@media screen and (min-width:600px) {
 		//grid-template-rows: 96px 100px 20px auto;
 	}
 }

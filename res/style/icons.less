@@ -1,0 +1,52 @@
+
+@font-family-icons: "icons";
+@font-filepath: "font";
+
+@ic-diamond: "\e900";
+@ic-github: "\e903";
+@ic-search: "\e901";
+@ic-settings: "\e902";
+
+@font-face {
+	font-family: '@{font-family-icons}';
+	src:
+	  url('@{font-filepath}/@{font-family-icons}.ttf?d47lta') format('truetype'),
+	  url('@{font-filepath}/@{font-family-icons}.woff?d47lta') format('woff'),
+	  url('@{font-filepath}/@{font-family-icons}.svg?d47lta#@{font-family-icons}') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+  
+[class^="ic-"], [class*=" ic-"] {
+	font-family: '@{font-family-icons}' !important;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ic-diamond {
+	&:before {
+	  content: @ic-diamond; 
+	}
+  }
+  .ic-github {
+	&:before {
+	  content: @ic-github; 
+	}
+  }
+  .ic-search {
+	&:before {
+	  content: @ic-search; 
+	}
+  }
+  .ic-settings {
+	&:before {
+	  content: @ic-settings; 
+	}
+  }
+  

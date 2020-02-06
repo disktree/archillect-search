@@ -26,7 +26,7 @@
         <meta name="twitter:description" content="Image Search Service"/>
     	<meta name="twitter:image" content="http://archillect.disktree.net/archillect.jpeg"/>
 
-        <title>ARCHILLECT-SEARCH</title>
+        <title>Archillect Search</title>
 
         <link rel="author" href="humans.txt" type="text/plain">
 		<link rel="shortcut icon" href="favicon.ico">
@@ -39,17 +39,20 @@
 
     <body>
         <header>
-            <h1>ARCHILLECT-SEARCH</h1>
+            <h1>Archillect Search</h1>
             <a href="http://archillect.disktree.net/search"><img src="logo_thick.svg"></a>
         </header>
         <form class="controls">
             <div class="search">
                 <input type="search" name="term" placeholder="…" list="terms_list">
-                <button type="button" name="submit" disabled>SEARCH</button>
+                <button type="button" name="submit" class="ic-search" disabled></button>
             </div>
+            <!-- <i class="ic-settings"></i> -->
             <div class="settings">
-                <input type="range" name="limit" value="100" min="1" max="1000000" step="1" title="LIMIT">
-                <input type="range" name="precision" value="0.1" min="0.0" max="1.0" step="0.01" title="PRECISION">
+                <input type="number" name="limit" value="100" min="1" max="1000" step="1" title="LIMIT">
+                <input type="number" name="precision" value="0.2" min="0.0" max="1.0" step="0.01" title="PRECISION">
+                <!-- <input type="range" name="limit" value="100" min="1" max="1000000" step="1" title="LIMIT">
+                <input type="range" name="precision" value="0.1" min="0.0" max="1.0" step="0.01" title="PRECISION"> -->
             </div>
             <!--
             <datalist id="terms_list"></datalist>
@@ -58,8 +61,10 @@
         <div class="info"></div>
         <ol class="images"></ol>
         <ul class="words"></ul>
-        <aside class="links"></aside>
-        <footer>https://disktree.net</footer>
+        <footer>
+            <a href="https://github.com/disktree/archillect-search" class="ic-github"></a>
+            <a href="https://disktree.net" class="ic-diamond"></a>
+        </footer>
     </body>
 
 </html>
