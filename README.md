@@ -1,7 +1,7 @@
 
 # |  |  | ARCHILLECT-SEARCH
 
->  [Archillect](http://archillect.com/) image classification and search experiment.
+>  [Archillect](https://archillect.com/) image classification and search experiment.
 >  http://archillect.disktree.net/search/
 
 ![](https://pbs.twimg.com/media/DfbIqw3XkAgv5IJ.jpg:large)
@@ -10,7 +10,7 @@
 ### API/Service
 
 Example request to get meta data for the term **cat** with at least recognition precision of **0.5** and limit the results to **10**:
-http://195.201.41.121:7777/?term=cat&precision=0.5&limit=10
+http://195.201.41.121:7777/?q=cat&precision=0.5&limit=10
 
 Static image meta data files can be accessed by index like:
 http://195.201.41.121/archillect/meta/1.json
